@@ -1,0 +1,8 @@
+#This file is created by SOHAIL AHMED MOHAMMED to ensure PUPPET is running in allthe agent by making sure that this file is copied in all the nodes.
+
+#Universal id of elan users 
+
+username:elanadmin
+passwd:*********
+
+#THANK YOU FOR WASTING YOUR TIME BY READING THIS 

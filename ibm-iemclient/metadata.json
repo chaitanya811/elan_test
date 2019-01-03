@@ -1,0 +1,13 @@
+{
+  "name": "ibm-iemclient",
+  "version": "0.1.0",
+  "author": "Asrar Ahmed",
+  "summary": "Install IBM IEM Client",
+  "license": "Apache 2.0",
+  "source": "",
+  "project_page": "IBM",
+  "issues_url": "IBM",
+  "dependencies": [
+    {"version_requirement":">= 1.0.0","name":"puppetlabs-stdlib"}
+  ]
+}

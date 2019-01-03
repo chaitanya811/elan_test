@@ -1,0 +1,27 @@
+dn: <%= @domain %>
+objectClass: top
+objectClass: dcObject
+objectclass: organization
+o: Elan Technologies
+dc: Elan
+
+dn: cn=Manager,<%= @domain %>
+objectClass: organizationalRole
+cn: Manager
+description: Directory Manager
+
+dn: ou=People,<%= @domain %>
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Users,<%= @domain %>
+objectClass: organizationalUnit
+ou: Users
+
+dn: ou=Group,<%= @domain %>
+objectClass: organizationalUnit
+ou: Group
+
+dn: ou=Services,<%= @domain %>
+objectClass: organizationalUnit
+ou: Services

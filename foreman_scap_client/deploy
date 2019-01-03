@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e -o pipefail
+set -x
+
+server=foreman-1.7.local.lan
+[ "x" != "x$1" ] && server="$1"
+project=puppet-foreman_scap_client
+
+puppet module build .
+ssh root@$server 'rm -rf ~/rpmbuild/RPMS/noarch/'$project'* ~/'$project'*'
+scp -r ../$project root@$server:
+scp ../../theforeman/foreman-packaging/$project/${project}.spec root@$server:$project/pkg
+ssh root@$server '
+	yum install puppetlabs-stdlib -y \
+	&& cd '$project'/pkg \
+	&& rpmbuild -ba --define "_sourcedir `pwd`" '$project'.spec \
+	&& rpm -Uvh --force ~/rpmbuild/RPMS/noarch/'$project'*
+	'

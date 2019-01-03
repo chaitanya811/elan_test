@@ -1,0 +1,9 @@
+##Redirect all tomcat requests to tomcat at port 8080
+
+<VirtualHost <%= ipaddress %>:80>
+ProxyPreserveHost On
+ProxyRequests Off
+servername edallinp04.elan.elantecs.com
+ProxyPass /  http://127.0.0.1:8080/
+ProxyPassReverse /  http://127.0.0.1:8080/
+</VirtualHost>

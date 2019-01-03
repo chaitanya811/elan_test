@@ -1,0 +1,19 @@
+# Created by puppet => modules/ntp/templates/etc/ntp.conf.erb
+
+<%# This Block configures External Servers to FS and OPS ntp servers %>
+driftfile /var/lib/ntp/drift
+<% if (( @fs_ntp_servers.include? @fqdn )) or (( @ops_ntp_servers.include? @fqdn )) %>
+server <%= scope['ntp::_ntpServers'].shift -%> iburst prefer
+<% scope['ntp::_ntpServers'].each do |_server| -%>server <%= _server -%> iburst
+<% end %>
+<% else %>
+<%# This Block configures ntp clients to FS and OPS ntp servers %>
+<% if (( @fs.include? @location )) or (( not @ops.include? @location )) %>server <%= @prefer_ntp -%> iburst prefer
+<% @fs_ntp_servers.delete(@prefer_ntp) -%><% @fs_ntp_servers.each do |_server| -%>server <%= _server %> iburst
+<% end %>
+<% elsif (( @ops.include? @location )) %>server <%= @prefer_ntp %> iburst prefer
+<% @ops_ntp_servers.delete(@prefer_ntp) %><% @ops_ntp_servers.each do |_server| -%>server <%= _server -%> iburst
+<% end -%>
+<% end -%><% end -%>
+includefile /etc/ntp/crypto/pw
+keys /etc/ntp/keys

@@ -1,0 +1,14 @@
+{
+  "name": "ldap",
+  "version": "0.1.0",
+  "author": "Rajesh Moturi",
+  "summary": "LDAP Server, Client Install.Manage LDAP Users from Gitlab Repo.",
+  "license": "Elantecs 2.0",
+  "source": "http://edalregp01.elan.elantecs.com",
+  "issues_url": "http://edalregp01.elan.elantecs.com",
+  "project_page": "http://edalregp01.elan.elantecs.com",
+  "dependencies": [
+    {"version_requirement":">= 1.0.0","name":"puppetlabs-stdlib"}
+  ]
+}
+

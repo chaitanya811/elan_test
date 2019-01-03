@@ -1,0 +1,25 @@
+# Created by puppet => modules/ntp/templates/etc/ntp.conf.erb
+
+<%# This Block configures External Servers as ntp servers -%>
+driftfile /var/lib/ntp/drift
+<% if (( @fs_ntp_servers.include? @fqdn )) or (( @ops_ntp_servers.include? @fqdn )) -%>
+<% prefer_ntp = @ntp_ext.split(',').first -%>
+server <%= prefer_ntp -%> prefer iburst<% @ntp_ext.split(',').each do |server| -%><% if server != prefer_ntp -%>server <%= server -%> iburst <% end -%>
+<% end -%>
+<% else -%><%# This Block configures Internal Servers as ntp servers -%>
+<% prefer_ntp = @ntp_servers.split(',').first -%>server <%= prefer_ntp -%> prefer iburst<% @ntp_servers.split(',').each do |server| -%><% if server != prefer_ntp -%>server <%= server -%> iburst <% end -%>
+<% end -%><% end -%>
+#Nagios servers
+<% @nagios_nm_nt.split(',').each do |_server| -%>restrict <%=_server %> nomodify notrap
+<% end %>
+restrict default ignore
+restrict -6 default ignore
+restrict 127.0.0.1
+restrict -6 ::1
+restrict 10.24.1.1 nomodify notrap noquery
+restrict 192.168.0.0 nomodify notrap noquery
+restrict 10.0.0.0 mask 255.0.0.0 noserve nomodify notrap noquery
+restrict 172.16.0.0 mask 255.240.0.0 noserve nomodify notrap noquery
+restrict 192.168.0.0 mask 255.255.0.0 noserve nomodify notrap noquery
+includefile /etc/ntp/crypto/pw
+keys /etc/ntp/keys

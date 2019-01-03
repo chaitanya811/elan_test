@@ -1,0 +1,16 @@
+require 'facter'
+
+ENV['PATH']='/bin:/sbin:/usr/bin:/usr/sbin'
+
+if ! File.exist?("/root/.build/envs")
+	STDERR.puts "File /root/.build/envs not found"	
+end
+
+result = %x{grep LOCATION /root/.build/envs 2>/dev/null | awk -F "=" '{print $2}' | tail -1}
+result.strip!
+
+Facter.add(:location) do
+	setcode do
+	result
+	end
+end

@@ -1,0 +1,3 @@
+k=$1
+: ${k:="root"}
+/usr/bin/sudo -u $k /usr/local/bin/sudosh

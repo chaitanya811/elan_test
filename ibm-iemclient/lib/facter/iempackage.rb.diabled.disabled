@@ -1,0 +1,12 @@
+require 'facter'
+
+ENV['PATH']='/bin:/sbin:/usr/bin:/usr/sbin'
+
+result = %x{find /var/tmp/iem -name "puppetlabs-*" 2>/dev/null}
+result.strip!
+
+Facter.add(:iempackage) do
+	setcode do
+	result
+	end
+end

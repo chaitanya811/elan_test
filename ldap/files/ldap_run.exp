@@ -1,0 +1,11 @@
+#!/usr/bin/expect -f
+# ldif, Domain and password are passed as args.
+
+set ldif [lindex $argv 0]
+set domain [lindex $argv 1]
+set password [lindex $argv 2]
+
+spawn ldapadd -x -D cn=Manager,$domain -W -f "$ldif"
+expect "Enter LDAP Password:"
+send "$password\r"
+expect eof

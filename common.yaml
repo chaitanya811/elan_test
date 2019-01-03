@@ -1,0 +1,5 @@
+---
+
+# python_pip::modules : ['requests', 'PyYAML']
+# python_pip::package::redhat : [ 'epel-release', 'python2-pip' ]
+# python_pip::package::debian : [ 'python-pip' ]

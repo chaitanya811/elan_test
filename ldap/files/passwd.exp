@@ -1,0 +1,11 @@
+#!/usr/bin/expect -f
+# password is passed as only arg
+
+set password [lindex $argv 0]
+
+spawn slappasswd
+expect "New password:"
+send "$password\r"
+expect "new password:"
+send "$password\r"
+expect eof

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+#exec /usr/libexec/openssh/ssh-ldap-helper -s "$1"
+
+exec /usr/libexec/openssh/ssh-ldap-helper -d -e -f /etc/openldap/ldap-ssh.conf -v -s "$1"

@@ -1,0 +1,10 @@
+#! /bin/bash
+#Script Written by Rajesh Moturi
+#Generates macaddress combinations
+
+prefix=$1
+if [ `echo $prefix | egrep "^([0-9a-fA-F]{2}:){2}[0-9a-fA-F]{2}$"` ];then
+printf "${prefix}:%02X:%02X:%02X\n" $[RANDOM%256] $[RANDOM%256] $[RANDOM%256] | tr [:upper:] [:lower:]
+else
+printf '00:0c:29:%02X:%02X:%02X\n' $[RANDOM%256] $[RANDOM%256] $[RANDOM%256] | tr [:upper:] [:lower:]
+fi

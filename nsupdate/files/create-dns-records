@@ -1,0 +1,90 @@
+#!/bin/bash
+
+R='\033[0;31m';
+Y='\033[0;33m';
+G='\033[0;32m';
+N='\033[m';
+
+dnsupdate() {
+echo $1
+echo $2
+echo -e "\n${Y}USING ZONE : $zone${N}\n"
+echo "server edallinp04.elan.elantecs.com
+debug yes
+zone $1
+$2
+show
+send" > /tmp/nsupdate.$$.txt
+
+nsupdate -k /usr/bin/Kelan.elantecs.com.+157+62060.private -v /tmp/nsupdate.$$.txt
+
+if [ $? = 0 ];then
+echo -e "${G}\nDNS RECORD $action SUCCESSFUL!!\n${N}" && nslookup $3
+else
+echo -e "${R}\nDNS RECORD $action FAILED!!${N}\n"
+fi
+
+rm -rf /tmp/nsupdate.$$.txt
+}
+
+echo -e "\n## THIS SCRIPT CREATES DNS RECORDS TO ELAN DNS SERVER - EDALLINP04.ELAN.ELANTECS.COM##\n"
+
+[ ! -f "/usr/bin/Kelan.elantecs.com.+157+62060.private" ] && echo -e "\nDNSSEC KEY NOT FOUND..EXITING !!\n" && exit
+
+ping -c1 edallinp04.elan.elantecs.com
+
+if [ $? = 0 ];then
+echo -e "\n${G}DNS SERVER IS REACHABLE !!\n${N}"
+else
+echo -e "\n${R}DNS SERVER IS NOT REACHABLE..EXITING !!\n${N}"
+exit
+fi
+
+yum -y install nc
+nc -v edallinp04.elan.elantecs.com 53 << EOF
+EOF
+
+if [ $? = 0 ];then
+echo -e "\n${G}DNS SERVER IS UP AND RUNNING ON PORT 53 !!\n${N}"
+else
+echo -e "\n${R}DNS SERVER IS NOT REACHABLE ON PORT 53..EXITING !!\n${N}"
+exit
+fi
+
+read -p "PLEASE ENTER THE DNS RECORD TYPE ( A/PTR/CNAME ): " RECTYPE
+read -p "PLEASE ENTER THE ACTION (ADD/DELTE): " ACTION
+read -p "PLEASE ENTER THE TARGET FQDN : " fqdn
+
+rectype=$(echo $RECTYPE | tr [:upper:] [:lower:])
+record=${rectype:-a}
+action=$(echo $ACTION | tr [:upper:] [:lower:])
+action=${action:-add}
+
+[ $record != cname ] && read -p "PLEASE ENTER THE IPADDRESS: " ipaddr
+[ $record = cname ] && read -p "PLEASE ENTER THE ALIAS FQDN : " alias
+
+[ $record = ptr ] && zone="2.168.192.in-addr.arpa" || zone="elan.elantecs.com."
+
+revip=$(echo $ipaddr| awk -F. '{OFS="."; print $4,$3,$2,$1}')
+
+case $record in 
+a)dnsupdate "$zone" "update $action $fqdn 86400 $record $ipaddr" "$fqdn"
+;;
+ptr)
+add="update $action ${revip}.in-addr.arpa 86400 ptr ${fqdn}."
+delete="update $action ${revip}.in-addr.arpa ptr"
+send=$(echo ${!action})
+dnsupdate "$zone" "$send" "$ipaddr"
+;;
+cname) 
+add="update $action $alias 600 $record ${fqdn}."
+delete="update $action $alias $record"
+send=$(echo ${!action})
+dnsupdate "$zone" "$send" "$alias"
+;;
+*)
+record=$(echo $RECTYPE | tr [:lower:] [:upper:])
+echo -e "\n${R}$record : RECORD TYPE NOT SUPPORTED AT THIS TIME..EXITING !!${N}\n"
+exit
+;;
+esac

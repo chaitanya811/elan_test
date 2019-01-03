@@ -1,0 +1,40 @@
+#!/bin/bash
+# chkconfig: 2345 95 20
+# description: Manages the Apache Tomcat Service.
+# Supprted Actions: start,stop,monitor
+# processname: tomcat
+
+Usage () {
+echo -e "\nUSAGE : $0 {start|stop|status|restart}\n"
+exit
+}
+
+action=$1
+
+if [ $# = 1 ];then
+
+case $action in
+
+start) /usr/tomcat/*tomcat*/bin/catalina.sh start
+;;
+stop) /usr/tomcat/*tomcat*/bin/catalina.sh stop
+;;
+restart) /usr/tomcat/*tomcat*/bin/catalina.sh stop
+         /usr/tomcat/*tomcat*/bin/catalina.sh start
+;;
+status)
+ps -ef | grep java | grep tomcat | grep -v grep
+if [ $? = 0 ];then
+echo -e "\nTomcat is up and running..\n"
+exit 0
+else
+echo -e "\nTomcat is stopped..\n"
+exit 1
+fi
+;;
+*)Usage
+;;
+esac
+else
+Usage
+fi

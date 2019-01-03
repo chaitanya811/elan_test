@@ -1,0 +1,13 @@
+{
+  "name": "elantecs-motd",
+  "version": "0.1.1",
+  "author": "Rajesh Moturi",
+  "summary": "Applies Message Of the Day to Linux Servers",
+  "license": "Elantecs 1.0",
+  "source": "http://edallint20.elan.elantecs.com",
+  "project_page": "Elan Technologies",
+  "issues_url": null,
+  "dependencies": [
+    {"version_requirement":">= 1.0.0","name":"puppetlabs-stdlib"}
+  ]
+}

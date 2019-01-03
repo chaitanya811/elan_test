@@ -1,0 +1,14 @@
+{
+  "name": "python_pip",
+  "version": "0.1.0",
+  "author": "Praveen Kurra",
+  "summary": "Install and Manages Python pip package.",
+  "license": "Apache 2.0",
+  "source": "Verizon Internal",
+  "issues_url": "Verizon Internal",
+  "project_page": "Verizon Internal",
+  "dependencies": [
+    {"version_requirement":">= 1.0.0","name":"puppetlabs-stdlib"}
+  ]
+}
+

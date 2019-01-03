@@ -1,0 +1,7 @@
+# /etc/openldap/ldap-ssh.conf 
+####-> LDAP PRIMARY SERVER FQDN : <%= fqdn %> <-####
+<% if @ldapfqdn %>####-> LDAP SECONDARY SERVER FQDN : <%= ldapfqdn %> <-####<% end %>
+URI ldap://<%= ipaddress %>/ <% if @ldapsec %>ldap://<%= ldapsec %>/<% end %>
+BASE <%= @domain %>
+TLS_CACERT /etc/openldap/cacerts/cacert.pem
+TLS_REQCERT allow

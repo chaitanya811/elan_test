@@ -1,0 +1,14 @@
+dn: olcDatabase={2}bdb,cn=config
+changetype: modify
+replace: olcSyncRepl
+olcSyncRepl: rid=001
+  provider="ldap://<%= @ipaddress %>:389/"
+  bindmethod=simple
+  binddn="cn=Manager,<%= @domain %>"
+  credentials=<%= @password %>
+  searchbase="<%= @domain %>"
+  scope=sub
+  schemachecking=on
+  type=refreshAndPersist
+  retry="30 5 300 3"
+  interval=00:00:05:00

@@ -1,0 +1,12 @@
+{
+  "COPYING": "b234ee4d69f5fce4486a80fdaf4a4263",
+  "Gemfile": "943edf935e784acf1e655e2ab2748cde",
+  "NEWS": "bca24c4aaf543949d42b11efad1379eb",
+  "README.md": "2cda7d83c5c5b9e40423eab033837abe",
+  "deploy": "c5b333e11309d8aa55ed4a9a703071e4",
+  "lib/facter/rh_certificates.rb": "532b80a6c0c04b121504b70fd9ec7c1d",
+  "manifests/init.pp": "ba5cfc039f2612000274f2499545a177",
+  "manifests/params.pp": "cbb7d9e916fd9a0620e150415872ad72",
+  "metadata.json": "9461591333fa22b889bad368de2b76be",
+  "templates/config.yaml.erb": "1b87269af769a756308d09e2ef36799c"
+}

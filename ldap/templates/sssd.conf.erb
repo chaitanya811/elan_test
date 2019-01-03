@@ -1,0 +1,37 @@
+[domain/default]
+autofs_provider = ldap
+cache_credentials = True
+ldap_search_base = <%= @domain %>
+id_provider = ldap
+auth_provider = ldap
+chpass_provider = ldap
+ldap_uri = ldap://<%= ipaddress %>/
+ldap_tls_cacertdir = /etc/openldap/cacerts
+ldap_id_use_start_tls = False
+
+[sssd]
+services = nss, sudo, pam, autofs
+config_file_version = 2
+
+domains = default
+
+[nss]
+homedir_substring = /home
+
+[pam]
+
+[sudo]
+
+[autofs]
+
+[ssh]
+
+[pac]
+
+[ifp]
+
+[main/LDAP]
+id_provider = ldap
+sudo_provider = ldap
+ldap_uri = ldap://<%= ipaddress %>/
+ldap_sudo_search_base = "ou=SUDOers,<%= @domain %>"
